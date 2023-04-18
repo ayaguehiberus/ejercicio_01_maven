@@ -37,7 +37,6 @@ Desktop.ini
 
 # IntelliJ
 *.iml
-.idea/
 
 # Vscode
 .vscode
