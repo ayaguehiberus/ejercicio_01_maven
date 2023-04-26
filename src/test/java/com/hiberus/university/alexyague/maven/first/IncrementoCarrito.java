@@ -9,17 +9,12 @@ import org.openqa.selenium.chrome.ChromeOptions;
 
 import java.util.List;
 
-public class IncrementoCarrito {
+public class IncrementoCarrito extends Base {
 
     static WebDriver driver;
 
     static String urlInicial = "https://www.saucedemo.com/";
     static String urlPosterior = "https://www.saucedemo.com/inventory.html";
-    static By textfieldUsername = By.xpath("//input[@data-test='username']");
-    static By textfieldPassword = By.xpath("//input[@data-test='password']");
-    static By buttonLogin = By.xpath("//input[@data-test='login-button']");
-    static By buttonAddCart = By.xpath("//button[@data-test='add-to-cart-sauce-labs-bolt-t-shirt']");
-    static By badgeCart = By.xpath("//span[@class='shopping_cart_badge']");
     static String usuarioS = "standard_user";
     static String passwordS = "secret_sauce";
     static String numCarritoExp = "1";
@@ -27,39 +22,34 @@ public class IncrementoCarrito {
     public static void main(String[] args) {
 
         // Paso 1
-        WebDriverManager.chromedriver().setup();
-        ChromeOptions chromeOptions = new ChromeOptions();
-        driver = new ChromeDriver(chromeOptions);
-        driver.manage().window().maximize();
-
-        driver.get(urlInicial);
+        Utils.iniciarDriver(driver, urlInicial);
 
         // Paso 2
-        WebElement username = driver.findElement(textfieldUsername);
+        WebElement username = Utils.esperarElementoClickable(driver, textfieldUsername, 10L);
         username.click();
         username.sendKeys(usuarioS);
 
         // Paso 3
-        WebElement password = driver.findElement(textfieldPassword);
+        WebElement password = Utils.esperarElementoClickable(driver, textfieldPassword, 10L);
         password.click();
         password.sendKeys(passwordS);
 
         // Paso 4
-        driver.findElement(buttonLogin).click();
+        Utils.esperarElementoClickable(driver, buttonLogin, 10L);
 
         // Paso 5
         Boolean isUrlCorrect = driver.getCurrentUrl().equals(urlPosterior);
         System.out.println("¿Hemos realizado correctamente el login? " + isUrlCorrect);
 
         // Paso 6
-        driver.findElement(buttonAddCart).click();
+        Utils.esperarElementoClickable(driver, buttonAddCart, 10L).click();
 
         // Paso 7
-        Boolean existeElBadge = driver.findElement(badgeCart).isDisplayed();
+        WebElement badgeCartElem = Utils.esperarElementoVisible(driver, badgeCart, 10L);
 
-        if (existeElBadge){
-            Boolean numeroCoincide = driver.findElement(badgeCart).getText().equals(numCarritoExp);
-            System.out.println("");
+        if (badgeCartElem.isDisplayed()){
+            Boolean numeroCoincide = badgeCartElem.getText().equals(numCarritoExp);
+            System.out.println("Validación correcta. Existe " + badgeCartElem.getText() + " elementos en el carrito");
         }
 
         // Paso 7

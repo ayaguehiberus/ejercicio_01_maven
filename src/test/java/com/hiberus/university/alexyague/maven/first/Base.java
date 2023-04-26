@@ -8,6 +8,8 @@ public class Base {
     static By textfieldPassword = By.xpath("//input[@data-test='password']");
     static By buttonLogin = By.xpath("//input[@data-test='login-button']");
     static By inventoryListBy = By.xpath("//div[@class='inventory_item']");
+    static By buttonAddCart = By.xpath("//button[@data-test='add-to-cart-sauce-labs-bolt-t-shirt']");
+    static By badgeCart = By.xpath("//span[@class='shopping_cart_badge']");
     static String usuarioS = "standard_user";
     static String passwordS = "secret_sauce";
 }
