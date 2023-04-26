@@ -22,7 +22,11 @@ public class IncrementoCarrito extends Base {
     public static void main(String[] args) {
 
         // Paso 1
-        Utils.iniciarDriver(driver, urlInicial);
+        WebDriverManager.chromedriver().setup();
+        ChromeOptions chromeOptions = new ChromeOptions();
+        driver = new ChromeDriver(chromeOptions);
+        driver.manage().window().maximize();
+        driver.get(urlInicial);
 
         // Paso 2
         WebElement username = Utils.esperarElementoClickable(driver, textfieldUsername, 10L);
@@ -35,7 +39,7 @@ public class IncrementoCarrito extends Base {
         password.sendKeys(passwordS);
 
         // Paso 4
-        Utils.esperarElementoClickable(driver, buttonLogin, 10L);
+        Utils.esperarElementoClickable(driver, buttonLogin, 10L).click();
 
         // Paso 5
         Boolean isUrlCorrect = driver.getCurrentUrl().equals(urlPosterior);
@@ -45,7 +49,7 @@ public class IncrementoCarrito extends Base {
         Utils.esperarElementoClickable(driver, buttonAddCart, 10L).click();
 
         // Paso 7
-        WebElement badgeCartElem = Utils.esperarElementoVisible(driver, badgeCart, 10L);
+        WebElement badgeCartElem = Utils.esperarElementoClickable(driver, badgeCart, 10L);
 
         if (badgeCartElem.isDisplayed()){
             Boolean numeroCoincide = badgeCartElem.getText().equals(numCarritoExp);

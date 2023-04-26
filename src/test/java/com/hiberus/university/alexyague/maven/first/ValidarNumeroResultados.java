@@ -9,7 +9,6 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.time.Duration;
 import java.util.List;
 
 public class ValidarNumeroResultados extends Base {
@@ -23,7 +22,12 @@ public class ValidarNumeroResultados extends Base {
     public static void main(String[] args) {
 
         // Paso 1
-        Utils.iniciarDriver(driver, urlInicial);
+        WebDriverManager.chromedriver().setup();
+        ChromeOptions chromeOptions = new ChromeOptions();
+        driver = new ChromeDriver(chromeOptions);
+        driver.manage().window().maximize();
+
+        driver.get(urlInicial);
 
         // Paso 2
         WebElement username = Utils.esperarElementoClickable(driver, textfieldUsername, 10L);
@@ -36,7 +40,7 @@ public class ValidarNumeroResultados extends Base {
         password.sendKeys(passwordS);
 
         // Paso 4
-        Utils.esperarElementoClickable(driver, buttonLogin, 10L);
+        Utils.esperarElementoClickable(driver, buttonLogin, 10L).click();
 
         // Paso 5
         Boolean isUrlCorrect = driver.getCurrentUrl().equals(urlPosterior);

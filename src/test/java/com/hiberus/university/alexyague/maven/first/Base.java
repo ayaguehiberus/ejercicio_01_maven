@@ -1,8 +1,12 @@
 package com.hiberus.university.alexyague.maven.first;
 
+import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 
 public class Base {
+
 
     static By textfieldUsername = By.xpath("//input[@data-test='username']");
     static By textfieldPassword = By.xpath("//input[@data-test='password']");
