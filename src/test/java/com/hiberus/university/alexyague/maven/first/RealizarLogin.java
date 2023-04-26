@@ -7,17 +7,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-public class RealizarLogin {
+public class RealizarLogin extends Base{
 
     static WebDriver driver;
 
     static String urlInicial = "https://www.saucedemo.com/";
     static String urlPosterior = "https://www.saucedemo.com/inventory.html";
-    static By textfieldUsername = By.xpath("//input[@data-test='username']");
-    static By textfieldPassword = By.xpath("//input[@data-test='password']");
-    static By buttonLogin = By.xpath("//input[@data-test='login-button']");
-    static String usuarioS = "standard_user";
-    static String passwordS = "secret_sauce";
+
 
     public static void main(String[] args) {
 
@@ -30,21 +26,24 @@ public class RealizarLogin {
         driver.get(urlInicial);
 
         // Paso 2
-        WebElement username = driver.findElement(textfieldUsername);
+        WebElement username = Utils.esperarElementoClickable(driver, textfieldUsername, 10L);
         username.click();
         username.sendKeys(usuarioS);
 
         // Paso 3
-        WebElement password = driver.findElement(textfieldPassword);
+        WebElement password = Utils.esperarElementoClickable(driver, textfieldPassword, 10L);
         password.click();
         password.sendKeys(passwordS);
 
         // Paso 4
-        driver.findElement(buttonLogin).click();
+        Utils.esperarElementoClickable(driver, buttonLogin, 10L).click();
 
         // Paso 5
         Boolean isUrlCorrect = driver.getCurrentUrl().equals(urlPosterior);
         System.out.println("¿Hemos realizado correctamente el login? " + isUrlCorrect);
+
+        // Paso 6
+        driver.quit();
 
     }
 }

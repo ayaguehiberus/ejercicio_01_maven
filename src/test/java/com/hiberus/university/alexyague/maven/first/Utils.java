@@ -19,21 +19,21 @@ public class Utils {
         driver.get(url);
     }
 
-//    public static WebElement esperarElementoVisible(WebDriver driver, By loc, Long timeout){
-//
-//        WebElement element = null;
-//
-//        try {
-//            WebDriverWait wait = new WebDriverWait(driver, timeout);
-//            wait.until(ExpectedConditions.visibilityOf(driver.findElement(loc)));
-//            element = driver.findElement(loc);
-//
-//        } catch(Exception e){
-//            e.printStackTrace();
-//        }
-//
-//        return element;
-//    }
+    public static WebElement esperarElementoVisible(WebDriver driver, By loc, Long timeout){
+
+        WebElement element = null;
+
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, timeout);
+            wait.until(ExpectedConditions.visibilityOf(driver.findElement(loc)));
+            element = driver.findElement(loc);
+
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return element;
+    }
 
 
     public static WebElement esperarElementoClickable(WebDriver driver, By loc, Long timeout){

@@ -11,6 +11,7 @@ public class Base {
     static By textfieldUsername = By.xpath("//input[@data-test='username']");
     static By textfieldPassword = By.xpath("//input[@data-test='password']");
     static By buttonLogin = By.xpath("//input[@data-test='login-button']");
+    static By errorMsg = By.xpath("//h3[@data-test='error']");
     static By inventoryListBy = By.xpath("//div[@class='inventory_item']");
     static By buttonAddCart = By.xpath("//button[@data-test='add-to-cart-sauce-labs-bolt-t-shirt']");
     static By badgeCart = By.xpath("//span[@class='shopping_cart_badge']");
