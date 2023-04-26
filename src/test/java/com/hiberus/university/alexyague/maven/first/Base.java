@@ -14,6 +14,8 @@ public class Base {
     static By errorMsg = By.xpath("//h3[@data-test='error']");
     static By inventoryListBy = By.xpath("//div[@class='inventory_item']");
     static By buttonAddCart = By.xpath("//button[@data-test='add-to-cart-sauce-labs-bolt-t-shirt']");
+    static By buttonAddCart2 = By.xpath("//button[@data-test='add-to-cart-sauce-labs-onesie']");
+    static By buttonRemoveCart = By.xpath("//button[@data-test='remove-sauce-labs-onesie']");
     static By badgeCart = By.xpath("//span[@class='shopping_cart_badge']");
     static String usuarioS = "standard_user";
     static String passwordS = "secret_sauce";
