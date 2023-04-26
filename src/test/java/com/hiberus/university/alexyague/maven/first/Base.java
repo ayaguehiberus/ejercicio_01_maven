@@ -17,6 +17,7 @@ public class Base {
     static By buttonAddCart2 = By.xpath("//button[@data-test='add-to-cart-sauce-labs-onesie']");
     static By buttonRemoveCart = By.xpath("//button[@data-test='remove-sauce-labs-onesie']");
     static By badgeCart = By.xpath("//span[@class='shopping_cart_badge']");
+    static By cartIconChilds = By.xpath("//a[@class='shopping_cart_link']/child::span");
     static String usuarioS = "standard_user";
     static String passwordS = "secret_sauce";
 }
