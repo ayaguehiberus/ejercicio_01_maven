@@ -12,18 +12,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import java.time.Duration;
 import java.util.List;
 
-public class ValidarNumeroResultados {
+public class ValidarNumeroResultados extends Base {
 
     static WebDriver driver;
 
     static String urlInicial = "https://www.saucedemo.com/";
     static String urlPosterior = "https://www.saucedemo.com/inventory.html";
-    static By textfieldUsername = By.xpath("//input[@data-test='username']");
-    static By textfieldPassword = By.xpath("//input[@data-test='password']");
-    static By buttonLogin = By.xpath("//input[@data-test='login-button']");
-    static By inventoryListBy = By.xpath("//div[@class='inventory_item']");
-    static String usuarioS = "standard_user";
-    static String passwordS = "secret_sauce";
     static int inventoryListNumExp = 6;
 
     public static void main(String[] args) {
