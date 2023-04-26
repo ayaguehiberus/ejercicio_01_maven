@@ -29,25 +29,20 @@ public class ValidarNumeroResultados {
     public static void main(String[] args) {
 
         // Paso 1
-        WebDriverManager.chromedriver().setup();
-        ChromeOptions chromeOptions = new ChromeOptions();
-        driver = new ChromeDriver(chromeOptions);
-        driver.manage().window().maximize();
-
-        driver.get(urlInicial);
+        Utils.iniciarDriver(driver, urlInicial);
 
         // Paso 2
-        WebElement username = esperarElementoClickable(textfieldUsername, 10L);
+        WebElement username = Utils.esperarElementoClickable(driver, textfieldUsername, 10L);
         username.click();
         username.sendKeys(usuarioS);
 
         // Paso 3
-        WebElement password = esperarElementoClickable(textfieldPassword, 10L);
+        WebElement password = Utils.esperarElementoClickable(driver, textfieldPassword, 10L);
         password.click();
         password.sendKeys(passwordS);
 
         // Paso 4
-        esperarElementoClickable(buttonLogin, 10L);
+        Utils.esperarElementoClickable(driver, buttonLogin, 10L);
 
         // Paso 5
         Boolean isUrlCorrect = driver.getCurrentUrl().equals(urlPosterior);
@@ -61,25 +56,13 @@ public class ValidarNumeroResultados {
             System.out.println("¿Encontramos " + inventoryListNumExp + " productos en la página? " + inventoryListNumCorrect);
         }
 
+        else{
+            System.out.println("La lista no aparece");
+        }
+
         // Paso 7
         driver.quit();
     }
 
-    public static WebElement esperarElementoVisible(By loc, Long timeout){
-        WebDriverWait wait = new WebDriverWait(driver, timeout);
-        wait.until(ExpectedConditions.visibilityOf(driver.findElement(loc)));
-        return driver.findElement(loc);
-    }
 
-    public static List<WebElement> esperarElementosVisibles(By loc, Long timeout){
-        WebDriverWait wait = new WebDriverWait(driver, timeout);
-        wait.until(ExpectedConditions.visibilityOf(driver.findElement(loc)));
-        return driver.findElements(loc);
-    }
-
-    public static WebElement esperarElementoClickable(By loc, Long timeout){
-        WebDriverWait wait = new WebDriverWait(driver, timeout);
-        wait.until(ExpectedConditions.elementToBeClickable(loc));
-        return driver.findElement(loc);
-    }
 }
