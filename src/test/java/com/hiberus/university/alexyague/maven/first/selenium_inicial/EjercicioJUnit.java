@@ -1,4 +1,4 @@
-package com.hiberus.university.alexyague.maven.first;
+package com.hiberus.university.alexyague.maven.first.selenium_inicial;
 
 import org.junit.*;
 

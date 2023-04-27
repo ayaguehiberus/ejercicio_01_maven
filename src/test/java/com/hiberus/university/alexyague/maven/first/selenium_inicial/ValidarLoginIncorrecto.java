@@ -1,4 +1,4 @@
-package com.hiberus.university.alexyague.maven.first;
+package com.hiberus.university.alexyague.maven.first.selenium_inicial;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
@@ -6,21 +6,19 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 
-public class BotonRemoveCarrito extends Base{
+public class ValidarLoginIncorrecto extends Base{
 
     static WebDriver driver;
-
     static String urlInicial = "https://www.saucedemo.com/";
-    static String urlPosterior = "https://www.saucedemo.com/inventory.html";
-    static String usuarioS = "standard_user";
-    static String passwordS = "secret_sauce";
 
     public static void main(String[] args) {
+
         // Paso 1
         WebDriverManager.chromedriver().setup();
         ChromeOptions chromeOptions = new ChromeOptions();
         driver = new ChromeDriver(chromeOptions);
         driver.manage().window().maximize();
+
         driver.get(urlInicial);
 
         // Paso 2
@@ -37,17 +35,10 @@ public class BotonRemoveCarrito extends Base{
         Utils.esperarElementoClickable(driver, buttonLogin, 10L).click();
 
         // Paso 5
-        Boolean isUrlCorrect = driver.getCurrentUrl().equals(urlPosterior);
-        System.out.println("¿Hemos realizado correctamente el login? " + isUrlCorrect);
+        Boolean isErrorMsgDisplayed = driver.findElement(errorMsg).isDisplayed();
+        System.out.println("¿Ha salido el mensaje de error? " + isErrorMsgDisplayed);
 
         // Paso 6
-        Utils.esperarElementoClickable(driver, buttonAddCart2, 10L).click();
-
-        // Paso 7
-        WebElement butRemoveCartElem = Utils.esperarElementoClickable(driver, buttonRemoveCart, 10L);
-        System.out.println("¿Sale correctamente el botón de remover producto del carrito? " + butRemoveCartElem.isDisplayed());
-
-        // Paso 8
         driver.quit();
 
     }
