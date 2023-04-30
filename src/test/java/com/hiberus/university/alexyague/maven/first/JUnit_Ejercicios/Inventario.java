@@ -44,7 +44,7 @@ public class Inventario extends Locators{
         Assert.assertEquals("Fallo al realizar el login", urlExpected, driver.getCurrentUrl());
 
         // Paso 5: Validar que el numero de productos mostrados es igual a 6
-        Utils.esperarElementoVisible(driver, wait, INVENTORYLIST); // Espero a que la lista esté cargada
+        Utils.esperarElementoVisible(driver, wait, INVENTORYLISTITEM); // Espero a que se carguen elementos de la lista
         List<WebElement> listaProductos = driver.findElements(INVENTORYLISTITEM); // Almaceno la lista de productos
         Assert.assertEquals("La cantidad de productos en la lista no es " + numProductosExp, numProductosExp, listaProductos.size()); // Validación
     }
@@ -69,17 +69,28 @@ public class Inventario extends Locators{
 
         // Paso 5: Validar que el producto Sauce Labs Bolt T-Shirt aparece en el inventario.
         WebElement prod = Utils.esperarElementoVisible(driver, wait, SPECIFICPRODUCTNAME); // Busco el elemento a través de su localizador
-        Assert.assertNotNull("El producto no se encuentra en la lista", prod); // Valido (Los métodos esperarElementoVisible y esperarElementoClickable devuelven null si no se encuentra)
+        Assert.assertNotNull("El producto " + productName3 + " no se encuentra en la lista", prod); // Valido (Los métodos esperarElementoVisible y esperarElementoClickable devuelven null si no se encuentra)
     }
 
     @Test
     public void validarProductoAgregadoCarrito(){
+        // Paso 1, 2, 3, 4 (Login)
         Utils.realizarLogin(driver, wait);
         Assert.assertEquals("Fallo al realizar el login", urlExpected, driver.getCurrentUrl());
+
+        // Paso 5: Agregar al carrito el producto Sauce Labs Bolt T-Shirt
+        WebElement addProdToCart = Utils.esperarElementoClickable(driver, wait, BUTTONADDCARTPROD3);
+        Assert.assertNotNull("El botón de añadir producto no se encuentra para el producto " + productName3, addProdToCart); // Valido (Los métodos esperarElementoVisible y esperarElementoClickable devuelven null si no se encuentra)
+        addProdToCart.click();
+
+        // Paso 6: Validar que, en el icono del carrito, se ha agregado 1 producto.
+        WebElement elementosCarrito = Utils.esperarElementoVisible(driver, wait, CARTSIZE);
+        Assert.assertEquals("El número de elementos agregados al carrito es distinto de 1", "1", elementosCarrito.getText());
     }
 
     @Test
     public void validarProductoEliminadoCarrito(){
+        // Paso 1, 2, 3, 4 (Login)
         Utils.realizarLogin(driver, wait);
         Assert.assertEquals("Fallo al realizar el login", urlExpected, driver.getCurrentUrl());
     }
