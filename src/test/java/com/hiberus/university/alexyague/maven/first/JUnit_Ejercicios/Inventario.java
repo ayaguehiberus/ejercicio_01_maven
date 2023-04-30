@@ -124,6 +124,7 @@ public class Inventario extends Locators{
 
         // Paso 6:
         List<WebElement> carritoSpan = Utils.getListaElementosNoWait(driver, CARTSIZE); //
+        Assert.assertTrue("No se han añadido elementos al carrito", carritoSpan.size() > 0);
         Assert.assertEquals("No se han añadido 3 elementos al carrito. Elementos añadidos: " + carritoSpan.get(0).getText(), "3", carritoSpan.get(0).getText());
     }
 
