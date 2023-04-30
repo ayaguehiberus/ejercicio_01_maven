@@ -1,14 +1,17 @@
 package com.hiberus.university.alexyague.maven.first.JUnit_Ejercicios;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
+import org.apache.commons.collections.CollectionUtils;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
@@ -22,6 +25,7 @@ public class Inventario extends Locators{
     String urlExpected = "https://www.saucedemo.com/inventory.html";
     int numProductosExp = 6;
     String productName3 = "Sauce Labs Bolt T-Shirt";
+    String[] optionsOrderDropdown = {"az", "za", "lohi", "hilo"};
 
     @Before
     public void setUp(){
@@ -134,6 +138,19 @@ public class Inventario extends Locators{
         Utils.realizarLogin(driver, wait);
         Assert.assertEquals("Fallo al realizar el login", urlExpected, driver.getCurrentUrl());
 
+        // Paso 5: Seleccionar el filtro NAME (Z TO A)
+        WebElement orderDropdown = Utils.esperarElementoClickable(driver, wait, ORDERDROPDOWN);
+        Assert.assertNotNull("El dropdown para ordenar los elementos no fue encontrado en esta dirección: " + ORDERDROPDOWN.toString(), orderDropdown);
+        WebElement option = driver.findElement(By.xpath("//select[@data-test='product_sort_container']/option[@value='" + optionsOrderDropdown[1] + "']"));
+        Assert.assertEquals("No se ha encontrado la opción requerida en el dropdown " + optionsOrderDropdown[1], optionsOrderDropdown[1], option.getAttribute("value"));
+        Select select = new Select(orderDropdown);
+        select.selectByValue(optionsOrderDropdown[1]);
+
+        // Paso 6: Validar que el filtro seleccionado, ordena por el orden alfabético de la Z a la A
+        List<WebElement> listaWebElemProd = Utils.getListaElementosNoWait(driver, INVENTORYLISTITEMNAME);
+        ArrayList<String> listaProd = Utils.getTextOfWebElements(listaWebElemProd);
+        ArrayList<String> listaExpec = Utils.sortListInverseAlphabetical(listaProd);
+        Assert.assertTrue("La lista no fue ordenada adecuadamente", CollectionUtils.isEqualCollection(listaExpec, listaProd));
     }
 
     @Test

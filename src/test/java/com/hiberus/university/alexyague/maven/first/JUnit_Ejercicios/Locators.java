@@ -11,7 +11,6 @@ public class Locators {
     static By ERRORMSG = By.xpath("//h3[@data-test='error']");
 
     // Main page locators
-    static By INVENTORYLIST = By.xpath("");
     static By INVENTORYLISTITEM = By.xpath("//div[@class='inventory_item']");
     static By INVENTORYLISTITEMNAME = By.xpath("//div[@class='inventory_item_name']");
     static By SPECIFICPRODUCTNAME = By.xpath("//div[@class='inventory_list']/descendant::div[@class='inventory_item_name'][text()='Sauce Labs Bolt T-Shirt']");
@@ -20,4 +19,6 @@ public class Locators {
     static By BUTTONREMOVECARTPROD3 = By.xpath("//button[@data-test='remove-sauce-labs-bolt-t-shirt']");
     static By BADGECART = By.xpath("//span[@class='shopping_cart_badge']");
     static By CARTSIZE = By.xpath("//a[@class='shopping_cart_link']/child::span");
+    static By ORDERDROPDOWN = By.xpath("//select[@data-test='product_sort_container']");
+    static By ORDERDROPDOWNOPTION = By.xpath("//select[@data-test='product_sort_container']");
 }
