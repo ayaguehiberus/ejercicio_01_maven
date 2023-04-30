@@ -93,6 +93,21 @@ public class Inventario extends Locators{
         // Paso 1, 2, 3, 4 (Login)
         Utils.realizarLogin(driver, wait);
         Assert.assertEquals("Fallo al realizar el login", urlExpected, driver.getCurrentUrl());
+
+        // Paso 5: Agregar al carrito el producto Sauce Labs Bolt T-Shirt
+        WebElement addProdToCart = Utils.esperarElementoClickable(driver, wait, BUTTONADDCARTPROD3);
+        Assert.assertNotNull("El botón de añadir producto no se encuentra para el producto " + productName3, addProdToCart); // Valido (Los métodos esperarElementoVisible y esperarElementoClickable devuelven null si no se encuentra)
+        addProdToCart.click();
+
+        // Paso 6: Eliminar el producto Sauce Labs Bolt T-Shirt (Boton remove)
+        WebElement removeProdToCart = Utils.esperarElementoClickable(driver, wait, BUTTONREMOVECARTPROD3);
+        Assert.assertNotNull("El botón de remover producto no se encuentra para el producto " + productName3, removeProdToCart); // Valido (Los métodos esperarElementoVisible y esperarElementoClickable devuelven null si no se encuentra)
+        removeProdToCart.click();
+
+        // Paso 7:  Validar que en el icono del carrito se ha eliminado el producto.
+        List<WebElement> carritoSpan = Utils.getListaElementosNoWait(driver, CARTSIZE); //
+        Assert.assertTrue("El span de elementos del carrito existe, por lo que el elemento " + productName3 + " no se borró", carritoSpan.size() == 0);
+
     }
 
     @After

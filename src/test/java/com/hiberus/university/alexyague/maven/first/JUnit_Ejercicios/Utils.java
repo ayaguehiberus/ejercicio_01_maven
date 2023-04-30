@@ -41,6 +41,10 @@ public class Utils extends Locators{
 
         return element;
     }
+
+    public static List<WebElement> getListaElementosNoWait(WebDriver driver, By loc){
+        return driver.findElements(loc);
+    }
     
     public static Boolean elementoExisteEnLista(List<WebElement> lista, String text){
 
