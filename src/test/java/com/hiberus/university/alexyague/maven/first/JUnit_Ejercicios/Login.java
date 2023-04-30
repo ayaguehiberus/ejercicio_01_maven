@@ -31,7 +31,7 @@ public class Login extends Locators{
         driver.manage().deleteAllCookies();
         driver.manage().window().maximize();
 
-        wait = new WebDriverWait(driver, 10);
+        wait = new WebDriverWait(driver, 5);
 
         // Paso 1 Ir a la página https://www.saucedemo.com
         driver.get(url);
