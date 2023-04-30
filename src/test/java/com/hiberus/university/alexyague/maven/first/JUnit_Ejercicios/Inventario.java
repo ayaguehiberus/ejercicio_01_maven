@@ -11,6 +11,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Inventario extends Locators{
@@ -107,6 +108,46 @@ public class Inventario extends Locators{
         // Paso 7:  Validar que en el icono del carrito se ha eliminado el producto.
         List<WebElement> carritoSpan = Utils.getListaElementosNoWait(driver, CARTSIZE); //
         Assert.assertTrue("El span de elementos del carrito existe, por lo que el elemento " + productName3 + " no se borró", carritoSpan.size() == 0);
+    }
+
+    @Test
+    public void agregar3ProductosRandomCarrito(){
+        // Paso 1, 2, 3, 4 (Login)
+        Utils.realizarLogin(driver, wait);
+        Assert.assertEquals("Fallo al realizar el login", urlExpected, driver.getCurrentUrl());
+
+        // Paso 5: Agregar al carrito los 3 productos elegidos al azar
+        Utils.esperarElementoClickable(driver, wait, INVENTORYLISTITEMNAME);
+        ArrayList<WebElement> listaInventario = (ArrayList<WebElement>) Utils.getListaElementosNoWait(driver, BUTTONADDCARTPRODLIST);
+        List<WebElement> listaProdRandom = Utils.randomElementsOfList(listaInventario, 3);
+        Utils.clickElements(listaProdRandom);
+
+        // Paso 6:
+        List<WebElement> carritoSpan = Utils.getListaElementosNoWait(driver, CARTSIZE); //
+        Assert.assertEquals("No se han añadido 3 elementos al carrito. Elementos añadidos: " + carritoSpan.get(0).getText(), "3", carritoSpan.get(0).getText());
+    }
+
+    @Test
+    public void ordenarInventarioAlfabeticamente(){
+        // Paso 1, 2, 3, 4 (Login)
+        Utils.realizarLogin(driver, wait);
+        Assert.assertEquals("Fallo al realizar el login", urlExpected, driver.getCurrentUrl());
+
+    }
+
+    @Test
+    public void ordenarInventarioPrecioMenorAMayor(){
+        // Paso 1, 2, 3, 4 (Login)
+        Utils.realizarLogin(driver, wait);
+        Assert.assertEquals("Fallo al realizar el login", urlExpected, driver.getCurrentUrl());
+
+    }
+
+    @Test
+    public void ordenarInventarioPrecioMayorAMenor(){
+        // Paso 1, 2, 3, 4 (Login)
+        Utils.realizarLogin(driver, wait);
+        Assert.assertEquals("Fallo al realizar el login", urlExpected, driver.getCurrentUrl());
 
     }
 

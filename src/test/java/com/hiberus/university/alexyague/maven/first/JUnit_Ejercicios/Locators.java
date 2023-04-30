@@ -16,6 +16,7 @@ public class Locators {
     static By INVENTORYLISTITEMNAME = By.xpath("//div[@class='inventory_item_name']");
     static By SPECIFICPRODUCTNAME = By.xpath("//div[@class='inventory_list']/descendant::div[@class='inventory_item_name'][text()='Sauce Labs Bolt T-Shirt']");
     static By BUTTONADDCARTPROD3 = By.xpath("//button[@data-test='add-to-cart-sauce-labs-bolt-t-shirt']");
+    static By BUTTONADDCARTPRODLIST = By.xpath("//button[contains(@data-test, 'add-to-cart')]");
     static By BUTTONREMOVECARTPROD3 = By.xpath("//button[@data-test='remove-sauce-labs-bolt-t-shirt']");
     static By BADGECART = By.xpath("//span[@class='shopping_cart_badge']");
     static By CARTSIZE = By.xpath("//a[@class='shopping_cart_link']/child::span");
