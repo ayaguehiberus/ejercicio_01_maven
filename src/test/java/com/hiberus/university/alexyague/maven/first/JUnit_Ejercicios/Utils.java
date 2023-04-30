@@ -7,9 +7,38 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 public class Utils extends Locators{
+
+    public static List<WebElement> randomElementsOfList(ArrayList<WebElement> lista, int elementos){
+        if (lista.size() < elementos){
+            return null;
+        }
+        if (lista.size() == elementos){
+            return lista;
+        }
+
+        Random random = new Random();
+        ArrayList<WebElement> nuevaLista = (ArrayList<WebElement>) lista.clone();
+        List<WebElement> listaRandom = new ArrayList<>();
+
+        for (int i = 0; i < elementos; i++){
+            int rand = random.nextInt(nuevaLista.size());
+            listaRandom.add(nuevaLista.get(rand));
+            nuevaLista.remove(rand);
+        }
+
+        return listaRandom;
+    }
+
+    public static void clickElements(List<WebElement> lista){
+        for (WebElement elem : lista){
+            elem.click();
+        }
+    }
 
     public static WebElement esperarElementoClickable(WebDriver driver, WebDriverWait wait, By loc){
 
