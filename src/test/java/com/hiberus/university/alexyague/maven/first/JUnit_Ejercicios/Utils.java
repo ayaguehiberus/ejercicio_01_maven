@@ -8,6 +8,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -34,10 +35,31 @@ public class Utils extends Locators{
         return listaRandom;
     }
 
+    public static ArrayList<String> sortListInverseAlphabetical(ArrayList<String> lista){
+        ArrayList<String> nuevaLista = (ArrayList<String>) lista.clone();
+        nuevaLista.replaceAll(String::toLowerCase);
+        Collections.sort(nuevaLista, Collections.reverseOrder());
+        return nuevaLista;
+    }
+
     public static void clickElements(List<WebElement> lista){
         for (WebElement elem : lista){
             elem.click();
         }
+    }
+
+    public static ArrayList<String> getTextOfWebElements(List<WebElement> lista){
+        ArrayList<String> nuevaLista = new ArrayList<>();
+        try {
+            for (WebElement elem : lista) {
+                nuevaLista.add(elem.getText());
+            }
+            nuevaLista.replaceAll(String::toLowerCase);
+        } catch (NullPointerException npe){
+            System.out.println("ERROR: La lista de WebElements proporcionada está vacía");
+        }
+
+        return nuevaLista;
     }
 
     public static WebElement esperarElementoClickable(WebDriver driver, WebDriverWait wait, By loc){
