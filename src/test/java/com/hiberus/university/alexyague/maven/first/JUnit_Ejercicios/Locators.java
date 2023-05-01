@@ -37,6 +37,6 @@ public class Locators {
     static By BUTTON_FINISH = By.xpath("//button[@data-test='finish']");
 
     // Checkout Complete
-    static By TEXT_MSGCOMPLETE = By.xpath("//div[@class='complete-text']/text()");
+    static By TEXT_MSGCOMPLETE = By.xpath("//div[@class='complete-text']");
 
 }

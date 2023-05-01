@@ -61,6 +61,25 @@ public class Utils extends Locators{
         }
     }
 
+    public static void iterateFloatList(ArrayList<Float> lista){
+        for (float num:
+                lista) {
+            System.out.println(num);
+        }
+    }
+
+    public static float sumarFloatList(ArrayList<Float> lista){
+        float resul = 0f;
+        try {
+            for (float elem : lista) {
+                resul += elem;
+            }
+        } catch (NullPointerException npe){
+            System.out.println("ERROR: La lista de Floats proporcionada está vacía");
+        }
+        return resul;
+    }
+
     public static void clickElements(List<WebElement> lista){
         for (WebElement elem : lista){
             elem.click();
@@ -81,6 +100,20 @@ public class Utils extends Locators{
         return nuevaLista;
     }
 
+    public static ArrayList<Float> getFloatListFromStringList(ArrayList<String> lista){
+        ArrayList<Float> nuevaLista = new ArrayList<>();
+        try {
+            for (String elem : lista) {
+                nuevaLista.add(Float.parseFloat(elem));
+            }
+        } catch (NullPointerException npe){
+            System.out.println("ERROR: La lista de Strings proporcionada está vacía");
+        }
+
+        return nuevaLista;
+    }
+
+
     public static ArrayList<String> getAttributeOfWebElements(List<WebElement> lista, String attr){
         ArrayList<String> nuevaLista = new ArrayList<>();
         try {
@@ -88,6 +121,19 @@ public class Utils extends Locators{
                 nuevaLista.add(elem.getAttribute(attr));
             }
             nuevaLista.replaceAll(String::toLowerCase);
+        } catch (NullPointerException npe){
+            System.out.println("ERROR: La lista de WebElements proporcionada está vacía");
+        }
+
+        return nuevaLista;
+    }
+
+    public static ArrayList<WebElement> searchElementsFromOtherElements(ArrayList<WebElement> lista, By ruta){
+        ArrayList<WebElement> nuevaLista = new ArrayList<>();
+        try {
+            for (WebElement elem : lista) {
+                nuevaLista.add(elem.findElement(ruta));
+            }
         } catch (NullPointerException npe){
             System.out.println("ERROR: La lista de WebElements proporcionada está vacía");
         }

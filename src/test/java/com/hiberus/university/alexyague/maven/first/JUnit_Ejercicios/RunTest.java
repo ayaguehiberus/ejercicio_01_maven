@@ -7,7 +7,8 @@ import org.junit.runners.Suite;
 @Suite.SuiteClasses({
         Login.class,
         Inventario.class,
-        Carrito.class
+        Carrito.class,
+        CheckOut.class
 })
 
 public class RunTest {

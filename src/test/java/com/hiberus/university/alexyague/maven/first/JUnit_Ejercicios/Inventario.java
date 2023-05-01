@@ -192,7 +192,7 @@ public class Inventario extends Locators{
         Select select = new Select(orderDropdown);
         select.selectByValue(optionsOrderDropdown[3]);
 
-        // Paso 6: Validar que el filtro seleccionado, ordena por el orden de precio de menor a mayor
+        // Paso 6: Validar que el filtro seleccionado, ordena por el orden de precio de mayor a menor
         List<WebElement> listaWebElemProd = Utils.getListaElementosNoWait(driver, INVENTORYLISTITEMPRICE);
         ArrayList<Float> listaPrecios = parseStringPriceToFloat(Utils.getTextOfWebElements(listaWebElemProd));
         ArrayList<Float> listaPreciosExpec = Utils.sortListHiLo(listaPrecios);
