@@ -184,6 +184,19 @@ public class Inventario extends Locators{
         Utils.realizarLogin(driver, wait);
         Assert.assertEquals("Fallo al realizar el login", urlExpected, driver.getCurrentUrl());
 
+        // Paso 5: Seleccionar el filtro PRICE (high to low)
+        WebElement orderDropdown = Utils.esperarElementoClickable(driver, wait, ORDERDROPDOWN);
+        Assert.assertNotNull("El dropdown para ordenar los elementos no fue encontrado en esta dirección: " + ORDERDROPDOWN.toString(), orderDropdown);
+        WebElement option = driver.findElement(By.xpath("//select[@data-test='product_sort_container']/option[@value='" + optionsOrderDropdown[3] + "']"));
+        Assert.assertEquals("No se ha encontrado la opción requerida en el dropdown " + optionsOrderDropdown[3], optionsOrderDropdown[3], option.getAttribute("value"));
+        Select select = new Select(orderDropdown);
+        select.selectByValue(optionsOrderDropdown[3]);
+
+        // Paso 6: Validar que el filtro seleccionado, ordena por el orden de precio de menor a mayor
+        List<WebElement> listaWebElemProd = Utils.getListaElementosNoWait(driver, INVENTORYLISTITEMPRICE);
+        ArrayList<Float> listaPrecios = parseStringPriceToFloat(Utils.getTextOfWebElements(listaWebElemProd));
+        ArrayList<Float> listaPreciosExpec = Utils.sortListHiLo(listaPrecios);
+        Assert.assertEquals("La lista no fue ordenada adecuadamente", listaPreciosExpec, listaPrecios);
     }
 
     @After
