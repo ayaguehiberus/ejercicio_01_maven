@@ -24,5 +24,19 @@ public class Locators {
 
     // Carrito
     static By CARTBUTTONREMOVECARTLIST = By.xpath("//button[contains(@data-test, 'remove')]");
+    static By CHECKOUTBUTTON = By.xpath("//button[@data-test='checkout']");
+
+    // Checkout 1
+    static By FORM_FIRSTNAME = By.xpath("//input[@data-test='firstName']");
+    static By FORM_LASTNAME = By.xpath("//input[@data-test='lastName']");
+    static By FORM_POSTALCODE = By.xpath("//input[@data-test='postalCode']");
+    static By FORM_SUBMIT = By.xpath("//input[@type='submit' and @data-test='continue']");
+
+    // Checkout 2
+    static By LABEL_ITEMTOTALWITHOUTTAX = By.xpath("//div[@class='summary_subtotal_label']");
+    static By BUTTON_FINISH = By.xpath("//button[@data-test='finish']");
+
+    // Checkout Complete
+    static By TEXT_MSGCOMPLETE = By.xpath("//div[@class='complete-text']/text()");
 
 }
