@@ -18,8 +18,11 @@ public class Locators {
     static By BUTTONADDCARTPROD3 = By.xpath("//button[@data-test='add-to-cart-sauce-labs-bolt-t-shirt']");
     static By BUTTONADDCARTPRODLIST = By.xpath("//button[contains(@data-test, 'add-to-cart')]");
     static By BUTTONREMOVECARTPROD3 = By.xpath("//button[@data-test='remove-sauce-labs-bolt-t-shirt']");
-    static By BADGECART = By.xpath("//span[@class='shopping_cart_badge']");
+    static By CARTBUTTON = By.xpath("//a[@class='shopping_cart_link']");
     static By CARTSIZE = By.xpath("//a[@class='shopping_cart_link']/child::span");
     static By ORDERDROPDOWN = By.xpath("//select[@data-test='product_sort_container']");
+
+    // Carrito
+    static By CARTBUTTONREMOVECARTLIST = By.xpath("//button[contains(@data-test, 'remove')]");
 
 }

@@ -81,7 +81,19 @@ public class Utils extends Locators{
         return nuevaLista;
     }
 
+    public static ArrayList<String> getAttributeOfWebElements(List<WebElement> lista, String attr){
+        ArrayList<String> nuevaLista = new ArrayList<>();
+        try {
+            for (WebElement elem : lista) {
+                nuevaLista.add(elem.getAttribute(attr));
+            }
+            nuevaLista.replaceAll(String::toLowerCase);
+        } catch (NullPointerException npe){
+            System.out.println("ERROR: La lista de WebElements proporcionada está vacía");
+        }
 
+        return nuevaLista;
+    }
 
     public static WebElement esperarElementoClickable(WebDriver driver, WebDriverWait wait, By loc){
 
