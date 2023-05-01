@@ -42,6 +42,25 @@ public class Utils extends Locators{
         return nuevaLista;
     }
 
+    public static ArrayList<Float> sortListLoHi(ArrayList<Float> lista){
+        ArrayList<Float> nuevaLista = (ArrayList<Float>) lista.clone();
+        Collections.sort(nuevaLista);
+        return nuevaLista;
+    }
+
+    public static ArrayList<Float> sortListHiLo(ArrayList<Float> lista){
+        ArrayList<Float> nuevaLista = (ArrayList<Float>) lista.clone();
+        Collections.sort(nuevaLista, Collections.reverseOrder());
+        return nuevaLista;
+    }
+
+    public static void iterateStringList(ArrayList<String> lista){
+        for (String cad:
+             lista) {
+            System.out.println(cad);
+        }
+    }
+
     public static void clickElements(List<WebElement> lista){
         for (WebElement elem : lista){
             elem.click();
@@ -61,6 +80,8 @@ public class Utils extends Locators{
 
         return nuevaLista;
     }
+
+
 
     public static WebElement esperarElementoClickable(WebDriver driver, WebDriverWait wait, By loc){
 

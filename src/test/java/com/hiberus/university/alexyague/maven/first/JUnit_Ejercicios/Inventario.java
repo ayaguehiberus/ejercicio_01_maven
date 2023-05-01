@@ -150,7 +150,11 @@ public class Inventario extends Locators{
         List<WebElement> listaWebElemProd = Utils.getListaElementosNoWait(driver, INVENTORYLISTITEMNAME);
         ArrayList<String> listaProd = Utils.getTextOfWebElements(listaWebElemProd);
         ArrayList<String> listaExpec = Utils.sortListInverseAlphabetical(listaProd);
-        Assert.assertTrue("La lista no fue ordenada adecuadamente", CollectionUtils.isEqualCollection(listaExpec, listaProd));
+//        System.out.println("Lista ordenada esperada");
+//        Utils.iterateStringList(listaExpec);
+//        System.out.println("Lista ordenada real");
+//        Utils.iterateStringList(listaProd);
+        Assert.assertEquals("La lista no fue ordenada adecuadamente", listaExpec, listaProd);
     }
 
     @Test
@@ -159,6 +163,19 @@ public class Inventario extends Locators{
         Utils.realizarLogin(driver, wait);
         Assert.assertEquals("Fallo al realizar el login", urlExpected, driver.getCurrentUrl());
 
+        // Paso 5: Seleccionar el filtro PRICE (low to high)
+        WebElement orderDropdown = Utils.esperarElementoClickable(driver, wait, ORDERDROPDOWN);
+        Assert.assertNotNull("El dropdown para ordenar los elementos no fue encontrado en esta dirección: " + ORDERDROPDOWN.toString(), orderDropdown);
+        WebElement option = driver.findElement(By.xpath("//select[@data-test='product_sort_container']/option[@value='" + optionsOrderDropdown[2] + "']"));
+        Assert.assertEquals("No se ha encontrado la opción requerida en el dropdown " + optionsOrderDropdown[2], optionsOrderDropdown[2], option.getAttribute("value"));
+        Select select = new Select(orderDropdown);
+        select.selectByValue(optionsOrderDropdown[2]);
+
+        // Paso 6: Validar que el filtro seleccionado, ordena por el orden de precio de menor a mayor
+        List<WebElement> listaWebElemProd = Utils.getListaElementosNoWait(driver, INVENTORYLISTITEMPRICE);
+        ArrayList<Float> listaPrecios = parseStringPriceToFloat(Utils.getTextOfWebElements(listaWebElemProd));
+        ArrayList<Float> listaPreciosExpec = Utils.sortListLoHi(listaPrecios);
+        Assert.assertEquals("La lista no fue ordenada adecuadamente", listaPreciosExpec, listaPrecios);
     }
 
     @Test
@@ -172,5 +189,25 @@ public class Inventario extends Locators{
     @After
     public void tearDown(){
         driver.quit();
+    }
+
+
+
+    //--------------------------------------------
+
+    // Metodos propios de esta testsuite
+
+    public static ArrayList<Float> parseStringPriceToFloat(ArrayList<String> lista){
+        ArrayList<Float> nuevaLista = new ArrayList<>();
+        try {
+            for (String elem : lista) {
+                String nuevoElem = elem.replace("$", "");
+                nuevaLista.add(Float.parseFloat(nuevoElem));
+            }
+        } catch (NullPointerException npe){
+            System.out.println("ERROR: La lista de strings proporcionada está vacía");
+        }
+
+        return nuevaLista;
     }
 }
