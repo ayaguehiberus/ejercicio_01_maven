@@ -21,6 +21,8 @@ public class Locators {
     static By CARTBUTTON = By.xpath("//a[@class='shopping_cart_link']");
     static By CARTSIZE = By.xpath("//a[@class='shopping_cart_link']/child::span");
     static By ORDERDROPDOWN = By.xpath("//select[@data-test='product_sort_container']");
+    static By BUTTON_MENU = By.xpath("//button[@id='react-burger-menu-btn']");
+    static By BUTTON_LOGOUT = By.xpath("//a[@id='logout_sidebar_link']");
 
     // Carrito
     static By CARTBUTTONREMOVECARTLIST = By.xpath("//button[contains(@data-test, 'remove')]");

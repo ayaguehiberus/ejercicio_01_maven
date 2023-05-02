@@ -8,7 +8,8 @@ import org.junit.runners.Suite;
         Login.class,
         Inventario.class,
         Carrito.class,
-        CheckOut.class
+        CheckOut.class,
+        LogOut.class
 })
 
 public class RunTest {
