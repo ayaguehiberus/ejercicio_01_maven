@@ -10,6 +10,9 @@ import org.openqa.selenium.support.PageFactory;
 public class CheckoutInfoPage extends AbstractPage {
 
     public static final String PAGE_URL = "https://www.saucedemo.com/checkout-step-one.html";
+    public static final String FIRSTNAMEDEF = "alex";
+    public static final String LASTNAMEDEF = "yagüe";
+    public static final String POSTALCODEDEF = "47007";
 
     @FindBy(id = "react-burger-menu-btn")
     private WebElement buttonBurgerMenu;
@@ -32,6 +35,25 @@ public class CheckoutInfoPage extends AbstractPage {
     }
     @Override
     public WebElement getPageLoadedTestElement() {
-        return null;
+        return inputFirstname;
+    }
+
+    public void insertFirstname(String name){
+        inputFirstname.sendKeys(name);
+    }
+    public void insertLastname(String lname){
+        inputLastname.sendKeys(lname);
+    }
+    public void insertPostalcode(String pcode){
+        inputPostalcode.sendKeys(pcode);
+    }
+    public void checkoutButtonClick(){
+        buttonContinue.click();
+    }
+    public void checkoutContinue(){
+        insertFirstname(FIRSTNAMEDEF);
+        insertLastname(LASTNAMEDEF);
+        insertPostalcode(POSTALCODEDEF);
+        checkoutButtonClick();
     }
 }

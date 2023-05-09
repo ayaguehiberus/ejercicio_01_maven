@@ -1,6 +1,8 @@
 package com.hiberus.university.alexyague.maven.first.pageobjectmodel.pages;
 
+import com.hiberus.university.alexyague.maven.first.pageobjectmodel.utils.Utils;
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -28,6 +30,18 @@ public class CheckoutOverviewPage extends AbstractPage{
     }
     @Override
     public WebElement getPageLoadedTestElement() {
-        return null;
+        return subtotalPriceLabel;
+    }
+
+    public float getSubtotalPrice(){
+        return Utils.priceStringToFloat(subtotalPriceLabel.getText());
+    }
+    public void checkoutFinish(){
+        try {
+            finishButton.click();
+        } catch (TimeoutException toe){
+            toe.printStackTrace();
+            log.info("El botón finalizar del checkout no se ha encontrado");
+        }
     }
 }

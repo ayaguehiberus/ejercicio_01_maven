@@ -1,6 +1,7 @@
 package com.hiberus.university.alexyague.maven.first.pageobjectmodel.pages;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -32,6 +33,24 @@ public class CartPage extends AbstractPage{
     }
     @Override
     public WebElement getPageLoadedTestElement() {
-        return null;
+        return checkoutButton;
+    }
+
+    public boolean removeFirstProductFromCart(){
+        if (cartItemRemoveButton.size() > 0){
+            log.info("Removiendo producto dle carrito");
+            cartItemRemoveButton.get(0).click();
+            return true;
+        }
+        log.info("No existen botones de remover producto en el carrito");
+        return false;
+    }
+
+    public void realizarCheckOut(){
+        try {
+            checkoutButton.click();
+        } catch (TimeoutException toe){
+            log.info("Botón de checkout no localizado");
+        }
     }
 }

@@ -1,6 +1,7 @@
 package com.hiberus.university.alexyague.maven.first.pageobjectmodel.pages;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -28,6 +29,24 @@ public class CheckoutCompletePage extends AbstractPage{
     }
     @Override
     public WebElement getPageLoadedTestElement() {
-        return null;
+        return backHomeButton;
+    }
+
+    public String getMsgComplete(){
+        try {
+            log.info("Capturando mensaje de compra realizada");
+            return msgOrderCompleted.getText();
+        } catch (TimeoutException toe){
+            log.info("El elemento que contiene el mensaje no fue encontrado");
+            return "";
+        }
+    }
+    public void backToHome(){
+        try {
+            log.info("Volviendo a home");
+            backHomeButton.click();
+        } catch (TimeoutException toe){
+            log.info("Botón de volver no encontrado");
+        }
     }
 }
