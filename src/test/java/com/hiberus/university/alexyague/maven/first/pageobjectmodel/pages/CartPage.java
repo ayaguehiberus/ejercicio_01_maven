@@ -46,6 +46,20 @@ public class CartPage extends AbstractPage{
         return false;
     }
 
+    public int getNumItemsCart(){
+        int resul;
+
+        try {
+            resul = Integer.parseInt(spanCartNumber.getText());
+        } catch (TimeoutException toe){
+            toe.printStackTrace();
+            log.info("No hay items en el carrito");
+            resul = 0;
+        }
+
+        return resul;
+    }
+
     public void realizarCheckOut(){
         try {
             checkoutButton.click();

@@ -41,7 +41,7 @@ public class LoginPage extends AbstractPage{
 
     public void enterPassword(String password){
         log.info("Introduciendo password");
-        inputUsername.sendKeys(password);
+        inputPassword.sendKeys(password);
     }
 
     public void clickLoginButton(){

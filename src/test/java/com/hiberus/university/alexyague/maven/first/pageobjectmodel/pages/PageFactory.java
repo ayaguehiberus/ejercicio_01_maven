@@ -30,4 +30,17 @@ public class PageFactory {
         return driver;
     }
 
+    public static PageFactory getInstance(){
+        return pageFactory;
+    }
+    public LoginPage getLoginPage(){
+        return loginPage;
+    }
+    public InventoryPage getInventoryPage(){
+        return inventoryPage;
+    }
+    public CartPage getCartPage(){
+        return cartPage;
+    }
+
 }

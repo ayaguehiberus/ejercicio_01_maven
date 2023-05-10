@@ -10,6 +10,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.Select;
 
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,6 +65,20 @@ public class InventoryPage extends AbstractPage {
         return inventoryItemList.size();
     }
 
+    public boolean isProductInInventoryList(String name){
+        List<String> nameList = Utils.getTextOfWebElements(inventoryItemNameList);
+        return searchForItemName(nameList, name);
+    }
+    public boolean searchForItemName(List<String> nameList, String name){
+        for (String nameSearch:
+             nameList) {
+            if (nameSearch.equalsIgnoreCase(name)){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public boolean addOrRemoveProductToCart(String name){
         int productPosition = Utils.getListItemPosition(name, inventoryItemNameList);
         if (productPosition == -1){
@@ -93,10 +108,19 @@ public class InventoryPage extends AbstractPage {
             return;
         }
         List<Integer> lista = Utils.randomNumbers(0, inventoryItemAddButton.size(), cant);
+        int cont = 0;
         for (Integer index:
              lista) {
-            inventoryItemAddButton.get(index).click();
+            inventoryItemAddButton.get(index - cont).click();
+            cont++;
         }
+    }
+
+    public List<String> getInventoryNameList(){
+        return Utils.getTextOfWebElements(inventoryItemNameList);
+    }
+    public List<String> getInventoryPriceList(){
+        return Utils.getTextOfWebElements(inventoryItemPriceList);
     }
 
     public void sortInventoryList(String sortType){
@@ -146,6 +170,15 @@ public class InventoryPage extends AbstractPage {
             newListFl.add(newElem);
         }
         return Utils.sumarFloatList(newListFl);
+    }
+    public void goToCart(){
+        try {
+            log.info("Dirigiendose al carrito");
+            buttonCartLink.click();
+        } catch (TimeoutException toe){
+            toe.printStackTrace();
+            log.info("Botón de ir al carrito no encontrado");
+        }
     }
     public void logout(){
         try {

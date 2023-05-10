@@ -1,15 +1,17 @@
 package com.hiberus.university.alexyague.maven.first.pageobjectmodel.utils;
 
+import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebElement;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
+@Slf4j
 public class Utils {
 
     public static List<Integer> randomNumbers(int min, int max, int cant){
 
-        if (max - min + 1 > cant || min > max){
+        if (max - min + 1 < cant || min > max){
             throw new IllegalArgumentException("Invalid range");
         }
 
@@ -30,7 +32,7 @@ public class Utils {
         List<Float> newList = new ArrayList<>();
         for (String elem:
              list) {
-            newList.add(Float.parseFloat(elem));
+            newList.add(priceStringToFloat(elem));
         }
         return newList;
     }
@@ -55,13 +57,13 @@ public class Utils {
         if (lista.size() < 1){
             return -1;
         }
-
+        log.info("Recorriendo lista...");
         for (WebElement elem:
                 lista) {
-            cont++;
-            if (elem.getText() == name){
+            if (elem.getText().equalsIgnoreCase(name)){
                 return cont;
             }
+            cont++;
         }
         return -1;
     }
