@@ -1,4 +1,4 @@
-@LoginSuite
+@Login
 Feature: Login test suite
 
   Background: Set initial page
@@ -8,7 +8,7 @@ Feature: Login test suite
     And the user provides the username "<username>"
     And the user provides the password "<password>"
     When the user clicks the login button
-    Then the user is logged successfully and is into the inventory page
+    Then the user is in the inventory page
 
     Examples:
       | username      | password     |

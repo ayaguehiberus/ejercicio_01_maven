@@ -1,4 +1,4 @@
-@InventorySuite
+@Inventory
 Feature: Inventory Test Suite
 
   Background: Logging succesfully and go to inventory page

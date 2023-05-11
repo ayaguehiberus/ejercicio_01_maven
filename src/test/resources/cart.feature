@@ -1,4 +1,4 @@
-@CartSuite
+@Cart
 Feature: Cart Test Suite
 
   Background: Logging succesfully and go to inventory page
