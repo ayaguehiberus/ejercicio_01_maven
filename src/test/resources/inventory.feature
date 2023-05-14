@@ -1,9 +1,9 @@
 @Inventory
 Feature: Inventory Test Suite
 
-  Background: Logging succesfully and go to inventory page
+  Background: Logging successfully and go to inventory page
     Given the user goes to the main page
-    And the user logs succesfully in the main page
+    And the user logs successfully in the main page
     And the user is in the inventory page
 
   @CheckingInventory

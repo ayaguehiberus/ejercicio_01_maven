@@ -65,4 +65,19 @@ public class InventoryPageSteps {
                 inventoryPage.getItemList(sortType),
                 inventoryPage.getSortedInventoryList(sortType));
     }
+
+    @And("the user goes to cart page")
+    public void theUserGoesToCartPage() {
+        inventoryPage.goToCart();
+    }
+
+    @When("the user clicks in the burger menu")
+    public void theUserClicksInTheBurgerMenu() {
+        inventoryPage.openBurguerMenu();
+    }
+
+    @And("the user selects the logout option")
+    public void theUserSelectsTheLogoutOption() {
+        inventoryPage.clickLogout();
+    }
 }

@@ -42,5 +42,8 @@ public class PageFactory {
     public CartPage getCartPage(){
         return cartPage;
     }
+    public CheckoutInfoPage getCheckoutInfoPage() { return checkoutInfoPage; }
+    public CheckoutOverviewPage getCheckoutOverviewPage() { return checkoutOverviewPage; }
+    public CheckoutCompletePage getCheckoutCompletePage() { return checkoutCompletePage; }
 
 }

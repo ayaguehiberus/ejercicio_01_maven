@@ -1,6 +1,7 @@
 package com.hiberus.university.alexyague.maven.first.pageobjectmodel.pages;
 
 import lombok.extern.slf4j.Slf4j;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -38,7 +39,7 @@ public class CartPage extends AbstractPage{
 
     public boolean removeFirstProductFromCart(){
         if (cartItemRemoveButton.size() > 0){
-            log.info("Removiendo producto dle carrito");
+            log.info("Eliminando producto del carrito");
             cartItemRemoveButton.get(0).click();
             return true;
         }
@@ -51,8 +52,8 @@ public class CartPage extends AbstractPage{
 
         try {
             resul = Integer.parseInt(spanCartNumber.getText());
-        } catch (TimeoutException toe){
-            toe.printStackTrace();
+        } catch (TimeoutException | NoSuchElementException ex){
+            ex.printStackTrace();
             log.info("No hay items en el carrito");
             resul = 0;
         }

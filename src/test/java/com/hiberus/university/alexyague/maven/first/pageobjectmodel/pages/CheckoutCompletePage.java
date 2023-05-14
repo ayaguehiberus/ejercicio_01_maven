@@ -11,6 +11,7 @@ import org.openqa.selenium.support.PageFactory;
 public class CheckoutCompletePage extends AbstractPage{
 
     public static final String PAGE_URL = "https://www.saucedemo.com/checkout-complete.html";
+    public static final String MSG_COMPLETE = "Your order has been dispatched, and will arrive just as fast as the pony can get there!";
 
     @FindBy(id = "react-burger-menu-btn")
     private WebElement buttonBurgerMenu;

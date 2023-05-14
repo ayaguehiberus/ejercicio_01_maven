@@ -50,10 +50,13 @@ public class CheckoutInfoPage extends AbstractPage {
     public void checkoutButtonClick(){
         buttonContinue.click();
     }
-    public void checkoutContinue(){
+    public void fillTheForm(){
         insertFirstname(FIRSTNAMEDEF);
         insertLastname(LASTNAMEDEF);
         insertPostalcode(POSTALCODEDEF);
+    }
+    public void checkoutContinue(){
+        fillTheForm();
         checkoutButtonClick();
     }
 }

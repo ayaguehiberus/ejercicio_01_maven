@@ -9,6 +9,7 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 
 import java.sql.Time;
@@ -238,13 +239,20 @@ public class InventoryPage extends AbstractPage {
             log.info("Botón de ir al carrito no encontrado");
         }
     }
-    public void logout(){
+    public void openBurguerMenu(){
         try {
             buttonBurgerMenu.click();
-            logoutButton.click();
-        } catch (TimeoutException toe){
-            toe.printStackTrace();
-            log.info("No pudo realizarse logout. Alguno de los botones no fue encontrado");
+        } catch (TimeoutException | NoSuchElementException ex){
+            ex.printStackTrace();
+            log.info("No pudo localizarse el botón del menu de hamburguesa");
+        }
+    }
+    public void clickLogout(){
+        try {
+            wait.until(ExpectedConditions.elementToBeClickable(logoutButton)).click();
+        } catch (TimeoutException | NoSuchElementException ex){
+            ex.printStackTrace();
+            log.info("No se localizó el botón de logout");
         }
     }
 

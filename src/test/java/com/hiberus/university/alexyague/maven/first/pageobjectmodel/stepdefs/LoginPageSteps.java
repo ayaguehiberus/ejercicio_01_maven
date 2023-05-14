@@ -55,8 +55,8 @@ public class LoginPageSteps {
                 loginPage.PAGE_URL,
                 loginPage.getCurrentURL());
     }
-    @And("the user logs succesfully in the main page")
-    public void theUserLogsSuccesfullyInTheMainPage() {
+    @And("the user logs successfully in the main page")
+    public void theUserLogsSuccessfullyInTheMainPage() {
         loginPage.loginCorrecto();
     }
 }

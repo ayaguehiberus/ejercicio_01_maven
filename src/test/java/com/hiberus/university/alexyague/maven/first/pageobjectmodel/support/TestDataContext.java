@@ -19,6 +19,17 @@ public class TestDataContext {
         inventoryItemListInCart.remove(item);
         log.info("Eliminado {} del contexto(carrito)", item);
     }
+    public static float getTotalPriceOfCart(){
+        float total = 0f;
+        for (InventoryItem item:
+             inventoryItemListInCart) {
+            total += item.getPrice();
+        }
+        return total;
+    }
+    public static void cleanDataContext(){
+        inventoryItemListInCart.clear();
+    }
 
     public static List<InventoryItem> getInventoryItemListInCart(){
         return inventoryItemListInCart;

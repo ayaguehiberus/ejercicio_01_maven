@@ -2,7 +2,7 @@
 Feature: Login test suite
 
   Background: Set initial page
-    Given the user goes to the home page
+    Given the user goes to the main page
 
   Scenario Outline: Verify valid user can login
     And the user provides the username "<username>"

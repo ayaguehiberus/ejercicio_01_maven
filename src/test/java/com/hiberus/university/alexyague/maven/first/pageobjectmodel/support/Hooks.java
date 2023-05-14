@@ -26,6 +26,8 @@ public class Hooks {
     @After
     public void after(Scenario scenario){
         log.info("Ending scenario " + scenario.getName());
-        driver.close();
+        driver.manage().deleteAllCookies();
+        TestDataContext.cleanDataContext();
+        driver.quit();
     }
 }
