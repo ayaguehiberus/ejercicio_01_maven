@@ -46,11 +46,7 @@ public class LoginPage extends AbstractPage{
 
     public void clickLoginButton(){
         log.info("Logging in...");
-        try {
-            buttonLogin.click();
-        } catch (TimeoutException toe){
-            log.info("Timeout clicking login button" + toe.getClass().getSimpleName());
-        }
+        clicks(buttonLogin);
     }
 
     public boolean hasUsernamePasswordError(){
@@ -62,4 +58,5 @@ public class LoginPage extends AbstractPage{
         enterPassword(this.PASSWORD);
         clickLoginButton();
     }
+
 }
