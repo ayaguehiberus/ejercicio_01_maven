@@ -2,9 +2,7 @@ package com.hiberus.university.alexyague.maven.first.pageobjectmodel.pages;
 
 import lombok.extern.slf4j.Slf4j;
 import lombok.extern.slf4j.XSlf4j;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -41,4 +39,30 @@ public abstract class AbstractPage {
     }
 
 
+    public void navigateTo(String pageUrl) {
+        try {
+            driver.navigate().to(pageUrl);
+        } catch (java.lang.Exception e) {
+            if (e instanceof TimeoutException) {
+                log.info("Timeout loading home page");
+            } else if (e instanceof ScriptTimeoutException) {
+                log.info("Script timeout loading home page");
+            } else {
+                log.error(e.getMessage());
+            }
+        }
+    }
+    public String getCurrentURL(){
+        return driver.getCurrentUrl();
+    }
+
+    public void clicks(WebElement button){
+        try {
+            log.info("Haciendo click en boton " + button.getText());
+            button.click();
+        } catch (TimeoutException toe){
+            toe.printStackTrace();
+            log.info("Boton no encontrado");
+        }
+    }
 }

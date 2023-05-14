@@ -1,10 +1,11 @@
 package com.hiberus.university.alexyague.maven.first.pageobjectmodel.pages;
 
+import com.hiberus.university.alexyague.maven.first.pageobjectmodel.model.InventoryItem;
+import com.hiberus.university.alexyague.maven.first.pageobjectmodel.support.TestDataContext;
 import com.hiberus.university.alexyague.maven.first.pageobjectmodel.utils.Utils;
 import lombok.extern.slf4j.Slf4j;
-import org.openqa.selenium.TimeoutException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindAll;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -18,8 +19,6 @@ import java.util.List;
 public class InventoryPage extends AbstractPage {
 
     public static final String PAGE_URL = "https://www.saucedemo.com/inventory.html";
-    public static int numItemsCart;
-    public static String productName;
     public static final String SORTAZ = "az";
     public static final String SORTZA = "za";
     public static final String SORTHILO = "hilo";
@@ -53,7 +52,6 @@ public class InventoryPage extends AbstractPage {
 
     public InventoryPage(WebDriver driver){
         super(driver);
-        numItemsCart = 0;
         PageFactory.initElements(driver, this);
     }
     @Override
@@ -79,27 +77,27 @@ public class InventoryPage extends AbstractPage {
         return false;
     }
 
-    public boolean addOrRemoveProductToCart(String name){
-        int productPosition = Utils.getListItemPosition(name, inventoryItemNameList);
-        if (productPosition == -1){
-            log.info("No puede agregarse o removerse el producto porque no existe");
-            return false;
+    public void addOrRemoveProductToCart(String productName){
+        InventoryItem invItem = extractInventoryItem(productName);
+        if (invItem.getName().equals("")){
+            log.info("No puede agregarse " + productName + " al carrito porque no se encontró el item");
+            return;
         }
         try {
-            String textButton = inventoryItemButtons.get(productPosition).getText();
-            if (textButton.equalsIgnoreCase("remove")){
-                log.info("Removiendo producto...");
-            } else {
-                log.info("Añadiendo producto...");
-            }
-            inventoryItemButtons.get(productPosition).click();
-        } catch (TimeoutException toe){
-            log.info("Botón para añadir o remover del carrito no encontrado");
-            toe.printStackTrace();
-            return false;
+            WebElement boton = getAddOrRemoveButton(productName);
+            if(boton.getText().equalsIgnoreCase("add to cart")){
+                log.info("Añadiendo producto al carrito");
+                boton.click();
+                TestDataContext.addItem(invItem);
+            } else if (boton.getText().equalsIgnoreCase("remove")) {
+                log.info("Removiendo producto del carrito");
+                boton.click();
+                TestDataContext.removeItem(invItem);
+            } else log.info("El botón encontrado no coincide con botón para añadir o eliminar del carrito");
+        } catch (NullPointerException npe){
+            npe.printStackTrace();
+            log.info("Botón de añadir o remover producto no se pudo encontrar");
         }
-
-        return true;
     }
 
     public void addRandomProductsToCart(int cant){
@@ -111,16 +109,72 @@ public class InventoryPage extends AbstractPage {
         int cont = 0;
         for (Integer index:
              lista) {
-            inventoryItemAddButton.get(index - cont).click();
+            WebElement boton = inventoryItemAddButton.get(index - cont);
+            String productName = boton.getAttribute("data-test").replace("-", " ").replace("add to cart ", "");
+            TestDataContext.addItem(extractInventoryItem(productName));
+            log.info("Añadiendo producto " + productName + " al contexto");
+            boton.click();
+            log.info("Producto añadido al carrito");
             cont++;
         }
+        log.info("Items en el carrito:");
+        for (InventoryItem item:
+             TestDataContext.getInventoryItemListInCart()) {
+            log.info("Item: {}", item);
+        }
+    }
+    public WebElement getAddOrRemoveButton(String productName){
+        String productNameNoDash = productName.replace("-", " ").toLowerCase();
+        for (WebElement buttonItem:
+             inventoryItemButtons) {
+            if (buttonItem.getAttribute("data-test").replace("-", " ").contains(productNameNoDash)){
+                log.info("Botón de " + buttonItem.getText() + " encontrado");
+                return buttonItem;
+            }
+        }
+        log.info("Botón para añadir o remover producto no encontrado para " + productName);
+        return null;
+    }
+
+    public InventoryItem extractInventoryItem(String name){
+        String nameNoDash = name.replace("-", " ");
+        InventoryItem invItem = new InventoryItem();
+        By infoItemBy = By.xpath("descendant::*[@*='inventory_item_name']");
+        for (WebElement inventoryItem:
+             inventoryItemList) {
+            String itemName = inventoryItem.findElement(infoItemBy).getText().replace("-", " ");
+            if (itemName.equalsIgnoreCase(nameNoDash)){
+                invItem.setName(nameNoDash);
+                infoItemBy = By.xpath("descendant::*[@*='inventory_item_price']");
+                invItem.setPrice(Utils.priceStringToFloat(inventoryItem.findElement(infoItemBy).getText()));
+                return invItem;
+            }
+        }
+        log.info("Item de inventario {} extraído", invItem);
+        return invItem;
     }
 
     public List<String> getInventoryNameList(){
         return Utils.getTextOfWebElements(inventoryItemNameList);
     }
     public List<String> getInventoryPriceList(){
-        return Utils.getTextOfWebElements(inventoryItemPriceList);
+        return Utils.floatListToString(Utils.stringListToFloat(Utils.getTextOfWebElements(inventoryItemPriceList)));
+    }
+
+    public List<String> getItemList(String sortType){
+        switch (sortType){
+            case SORTAZ:
+            case SORTZA:
+                log.info("Obteniendo lista de nombres del inventario");
+                return Utils.getTextOfWebElements(inventoryItemNameList);
+            case SORTHILO:
+            case SORTLOHI:
+                log.info("Obteniendo lista de precios del inventario");
+                List<String> lista = Utils.getTextOfWebElements(inventoryItemPriceList);
+                List<Float> listaFloat = Utils.stringListToFloat(lista);
+                return Utils.floatListToString(listaFloat);
+        }
+        return null;
     }
 
     public void sortInventoryList(String sortType){
@@ -129,19 +183,23 @@ public class InventoryPage extends AbstractPage {
     }
     public List<String> getSortedInventoryList(String sortType){
         switch (sortType){
+            case SORTAZ:
+                log.info("Obteniendo lista de elementos ordenados alfabeticamente");
+                List<String> lista1 = Utils.getTextOfWebElements(inventoryItemNameList);
+                return Utils.sortListAlphabetical(lista1);
             case SORTZA:
                 log.info("Obteniendo lista de elementos ordenados alfabeticamente inversamente");
-                List<String> lista1 = Utils.getTextOfWebElements(inventoryItemNameList);
-                return Utils.sortListInverseAlphabetical(lista1);
+                List<String> lista2 = Utils.getTextOfWebElements(inventoryItemNameList);
+                return Utils.sortListInverseAlphabetical(lista2);
             case SORTHILO:
                 log.info("Obteniendo lista de precios ordenados de mayor a menor");
-                List<String> lista2 = Utils.getTextOfWebElements(inventoryItemPriceList);
-                List<Float> listaFloat1 = Utils.stringListToFloat(lista2);
+                List<String> lista3 = Utils.getTextOfWebElements(inventoryItemPriceList);
+                List<Float> listaFloat1 = Utils.stringListToFloat(lista3);
                 return Utils.floatListToString(Utils.sortListHiLo(listaFloat1));
             case SORTLOHI:
                 log.info("Obteniendo lista de precios ordenados de menor a mayor");
-                List<String> lista3 = Utils.getTextOfWebElements(inventoryItemPriceList);
-                List<Float> listaFloat2 = Utils.stringListToFloat(lista3);
+                List<String> lista4 = Utils.getTextOfWebElements(inventoryItemPriceList);
+                List<Float> listaFloat2 = Utils.stringListToFloat(lista4);
                 return Utils.floatListToString(Utils.sortListLoHi(listaFloat2));
         }
         log.info("Método de ordenación no implementado o incorrecto");
@@ -153,8 +211,8 @@ public class InventoryPage extends AbstractPage {
 
         try {
             resul = Integer.parseInt(spanCartNumber.getText());
-        } catch (TimeoutException toe){
-            toe.printStackTrace();
+        } catch (TimeoutException | NoSuchElementException ex){
+            ex.printStackTrace();
             log.info("No hay items en el carrito");
             resul = 0;
         }

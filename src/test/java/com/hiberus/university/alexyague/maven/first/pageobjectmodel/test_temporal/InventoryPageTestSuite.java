@@ -58,7 +58,7 @@ public class InventoryPageTestSuite {
     }
     @Test
     public void addToCartSpecificProduct() {
-        String specProdName = "Sauce Labs Bolt T-Shirt";
+        String specProdName = "Test.allTheThings() T-Shirt (Red)";
 
         loginPage.loginCorrecto();
 
@@ -81,7 +81,7 @@ public class InventoryPageTestSuite {
     }
     @Test
     public void addThreeRandomProducts(){
-        int productsAdded = 3;
+        int productsAdded = 6;
 
         loginPage.loginCorrecto();
 

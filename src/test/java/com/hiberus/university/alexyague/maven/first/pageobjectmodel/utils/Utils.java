@@ -4,6 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.openqa.selenium.WebElement;
 
 import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 @Slf4j
@@ -23,10 +25,24 @@ public class Utils {
         List<Integer> listaRandom = new ArrayList<>(set);
         return listaRandom;
     }
-    public static float priceStringToFloat(String precio){
-        String precioString = precio.replace("Item total: ", "");
-        precioString = precioString.replace("$","");
-        return Float.parseFloat(precioString);
+//    public static float priceStringToFloat(String precio){
+//        String precioString = precio.replace("Item total: ", "");
+//        precioString = precioString.replace("$","");
+//        return Float.parseFloat(precioString);
+//    }
+    public static float priceStringToFloat(String price){
+        final String regex = "([0-9]+)(\\.|,)?([0-9]+)";
+
+        final Pattern pattern = Pattern.compile(regex);
+        final Matcher matcher = pattern.matcher(price);
+
+        if (matcher.find()) {
+            String precioFinded = matcher.group().replace(",",".");
+            log.info("Precio encontrado, extraido, y parseado");
+            return Float.parseFloat(precioFinded);
+        }
+        log.info("No se pudo encontrar un valor que coincida con un precio");
+        return -1;
     }
     public static List<Float> stringListToFloat(List<String> list){
         List<Float> newList = new ArrayList<>();
@@ -90,6 +106,13 @@ public class Utils {
     }
     public static List<Float> getCopyOfFloatList(List<Float> lista){
         return lista.stream().collect(Collectors.toList());
+    }
+
+    public static List<String> sortListAlphabetical(List<String> lista){
+        List<String> newList = getCopyOfStringList(lista);
+        newList.replaceAll(String::toLowerCase);
+        Collections.sort(newList);
+        return newList;
     }
 
     public static List<String> sortListInverseAlphabetical(List<String> lista){
