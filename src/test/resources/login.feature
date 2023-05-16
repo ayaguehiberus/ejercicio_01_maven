@@ -4,6 +4,7 @@ Feature: Login test suite
   Background: Set initial page
     Given the user goes to the main page
 
+  @CorrectLogin
   Scenario Outline: Verify valid user can login
     And the user provides the username "<username>"
     And the user provides the password "<password>"
@@ -12,8 +13,8 @@ Feature: Login test suite
 
     Examples:
       | username      | password     |
-      | standard_user | secret_sauce |
-      | problem_user  | secret_sauce |
+      | standard_user | secret_sauceX |
+      | problem_user  | secret_sauceX |
 
   Scenario Outline: Verify invalid user can't login
     And the user provides the username "<username>"
