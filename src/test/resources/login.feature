@@ -13,8 +13,8 @@ Feature: Login test suite
 
     Examples:
       | username      | password     |
-      | standard_user | secret_sauceX |
-      | problem_user  | secret_sauceX |
+      | standard_user | secret_sauce |
+      | problem_user  | secret_sauce |
 
   Scenario Outline: Verify invalid user can't login
     And the user provides the username "<username>"
