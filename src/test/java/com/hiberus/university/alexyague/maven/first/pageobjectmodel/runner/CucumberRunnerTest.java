@@ -13,7 +13,7 @@ import org.junit.runner.RunWith;
                 "html:target/cucumber-reports.html",
                 "json:target/surefire-reports/cucumber.json"
         },
-//        tags = "@Login and @Cart and @Logout",
+        tags = "@Login or @Cart or @Logout",
         glue = {"com.hiberus.university.alexyague.maven.first.pageobjectmodel.stepdefs",
                 "com.hiberus.university.alexyague.maven.first.pageobjectmodel.support"
         },
