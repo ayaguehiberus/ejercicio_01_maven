@@ -17,13 +17,13 @@ pipeline {
                 )
 
                 // Run Maven on a Unix agent.
-                sh "mvn -Dmaven.test.failure.ignore=true clean package"
+                bat 'mvn -Dmaven.test.failure.ignore=true clean package'
             }
         }
 
         stage('Test') {
             steps{
-                sh 'mvn test'
+                bat 'mvn test'
             }
             post {
                 success {
